@@ -1,0 +1,159 @@
+/* General container styling */
+.view-report-container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    color: #333;
+  }
+  
+  /* Heading styling */
+  .view-report-container h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  
+  /* Form styling */
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #555;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+  }
+  
+  .form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  }
+  
+  /* Button styling */
+  button {
+    display: inline-block;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  button:hover:not(:disabled) {
+    background-color: #0056b3;
+  }
+  
+  /* Report display styling */
+  .report-display {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+  }
+  
+  .report-display h3 {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .report-display p {
+    font-size: 16px;
+    margin: 5px 0;
+    color: #555;
+  }
+  
+  .report-description h4 {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .report-description p {
+    font-size: 16px;
+    color: #555;
+  }
+  
+  /* Attachment styling */
+  .report-attachment {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .report-attachment img {
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Toast container positioning */
+  .Toastify__toast-container {
+    z-index: 9999;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .view-report-container {
+      padding: 15px;
+    }
+  
+    .form-group input {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    button {
+      font-size: 14px;
+      padding: 10px;
+    }
+  
+    .report-display {
+      padding: 15px;
+    }
+  
+    .report-display h3 {
+      font-size: 18px;
+    }
+  
+    .report-display p {
+      font-size: 14px;
+    }
+  
+    .report-description h4 {
+      font-size: 16px;
+    }
+  
+    .report-description p {
+      font-size: 14px;
+    }
+  }

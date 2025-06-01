@@ -1,0 +1,359 @@
+/* Container layout */
+.dashboard-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f7fa;
+  color: #333;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header styling */
+.dashboard-header {
+  background: linear-gradient(135deg, #004080 0%, #002147 100%);
+  color: #fff;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Welcome Section */
+.welcome-section {
+  text-align: left;
+}
+
+.welcome-section h1 {
+  font-size: 26px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 8px;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.welcome-section .welcome-message {
+  font-size: 15px;
+  color: #e0e0e0;
+  margin-bottom: 0;
+  line-height: 1.4;
+  animation: slideIn 0.8s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateY(10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Logout Button */
+.logout-button {
+  background-color: #ff4d4f;
+  color: #fff;
+  border: none;
+  width:10%;
+  height:40%;
+  padding: 0.4rem 0.8rem; /* Reduced padding for a smaller button */
+  font-size: 0.9rem; /* Slightly smaller font size */
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  white-space: nowrap; /* Prevents the text from wrapping */
+  text-align: center;
+  min-width: auto; /* Removes unnecessary width constraints */
+  height: auto; /* Adjusts height dynamically based on content */
+}
+.logout-button:hover {
+  background-color: #d9363e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Main content styling */
+.dashboard-content {
+  padding: 2rem;
+  flex-grow: 1;
+}
+
+.reports-section h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #003366;
+  border-bottom: 2px solid #e1e1e1;
+  padding-bottom: 0.5rem;
+}
+
+.loading,
+.no-reports {
+  font-size: 1.1rem;
+  color: #777;
+}
+
+/* Reports list layout */
+.reports-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.report-card {
+  background-color: #fff;
+  padding: 1.25rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e1e1e1;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.report-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.report-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  color: #00264d;
+  text-align: center;
+}
+
+.report-metadata,
+.report-status {
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  color: #555;
+}
+
+/* IPFS Hash Styling */
+.report-ipfs-hash {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  background-color: #f5f5f5;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border-left: 3px solid #007bff;
+}
+
+.report-ipfs-hash-value {
+  word-break: break-all;
+  flex-grow: 1;
+  font-family: monospace;
+  color: #444;
+}
+
+.copy-button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+  min-width: 55px;
+}
+
+.copy-button:hover {
+  background-color: #0056b3;
+  transform: translateY(-1px);
+}
+
+.copy-button:active {
+  transform: translateY(1px);
+}
+
+/* Actions */
+.report-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 0.75rem;
+}
+
+.view-button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 0.6rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  width: 100%;
+  text-align: center;
+}
+
+.view-button:hover {
+  background-color: #0056b3;
+}
+
+/* Status buttons */
+.status-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.status-button {
+  padding: 0.6rem;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.status-button.approve {
+  background-color: #28a745;
+}
+
+.status-button.approve:hover {
+  background-color: #218838;
+}
+
+.status-button.reject {
+  background-color: #dc3545;
+}
+
+.status-button.reject:hover {
+  background-color: #c82333;
+}
+
+.status-button.disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Error message styling */
+.error-message {
+  background-color: #ffe8e8;
+  color: #b00020;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 4px solid #b00020;
+  border-radius: 4px;
+}
+
+.retry-button {
+  background-color: #ff9800;
+  color: white;
+  padding: 0.4rem 0.75rem;
+  margin-left: 1rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.retry-button:hover {
+  background-color: #e68900;
+}
+
+/* Logout modal styling */
+.logout-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.logout-modal {
+  background-color: white;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  animation: modalSlideIn 0.4s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.logout-modal h3 {
+  margin-top: 0;
+  color: #003366;
+  font-size: 1.5rem;
+}
+
+.logout-modal p {
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.logout-modal-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.confirm-logout-button {
+  background-color: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.confirm-logout-button:hover {
+  background-color: #d9363e;
+}
+
+.cancel-logout-button {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 0.7rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-logout-button:hover {
+  background-color: #c0c0c0;
+}

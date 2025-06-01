@@ -1,0 +1,241 @@
+/* Login.css - Modern, clean styling for login and signup pages */
+
+/* Reset all background styles to prevent conflicts */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Apply background only to body */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fG1hcmluZXxlbnwwfHx8fDE2ODk2NjY4Mjk&ixlib=rb-1.2.1&q=80&w=1080') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+/* Container styling */
+.login-container,
+.signup-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: transparent;
+}
+
+.login-form-wrapper,
+.signup-form-wrapper {
+  width: 100%;
+  max-width: 450px;
+  padding: 32px;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+/* Form header */
+.login-form-wrapper h2,
+.signup-form-wrapper h2 {
+  margin-bottom: 24px;
+  color: #333;
+  font-size: 24px;
+  text-align: center;
+  font-weight: 600;
+  background-color: transparent;
+}
+
+/* Form groups */
+.form-group {
+  margin-bottom: 20px;
+  background-color: transparent;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #4a5568;
+  background-color: transparent;
+}
+
+/* Input fields with icons */
+.form-group .input-with-icon {
+  position: relative;
+  background-color: transparent;
+}
+
+.form-group .input-with-icon input {
+  width: 100%;
+  padding: 12px 14px 12px 40px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  background-color: white;
+}
+
+.form-group .input-with-icon .icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #718096;
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+}
+
+.form-group input:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  outline: none;
+}
+
+/* Submit button */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #4338ca;
+}
+
+.btn-primary:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}
+
+/* Error message */
+.error-message {
+  margin-bottom: 16px;
+  padding: 10px;
+  background-color: #fed7d7;
+  border-radius: 4px;
+  color: #c53030;
+  font-size: 14px;
+}
+
+/* Form footer */
+.form-footer {
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: #4a5568;
+  background-color: transparent;
+}
+
+.form-footer a,
+.form-footer p,
+.form-footer button {
+  background-color: transparent;
+}
+
+.form-footer a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.form-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Loading state */
+.loading-spinner {
+  text-align: center;
+  padding: 30px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner p {
+  margin-top: 16px;
+  color: #4a5568;
+  background-color: transparent;
+}
+
+/* Social login separator */
+.social-login-separator {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  font-size: 14px;
+  color: #718096;
+  background-color: transparent;
+}
+
+.social-login-separator::before,
+.social-login-separator::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #e2e8f0;
+  background-color: transparent;
+}
+
+.social-login-separator span {
+  margin: 0 10px;
+  background-color: transparent;
+}
+
+/* Google sign-in button */
+.btn-google {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 12px;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-google:hover {
+  background-color: #357ae8;
+}
+
+.btn-google img {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+  background-color: white;
+  padding: 2px;
+  border-radius: 50%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .login-form-wrapper,
+  .signup-form-wrapper {
+    padding: 24px;
+  }
+  
+  .login-form-wrapper h2,
+  .signup-form-wrapper h2 {
+    font-size: 22px;
+  }
+}

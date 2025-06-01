@@ -1,0 +1,252 @@
+
+/* Base styles for the body */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Main container that holds the form and background */
+.main-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwzNjUyOXwwfDF8c2VhcmNofDJ8fG1hcmluZXxlbnwwfHx8fDE2ODk2NjY4Mjk&ixlib=rb-1.2.1&q=80&w=1080') no-repeat center center;
+  background-size: cover;
+  padding: 20px;
+}
+
+/* Hidden since we're using the background on the main container */
+.bg-container {
+  display: none;
+}
+
+/* Auth container for the form - centered card over the background */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.auth-card {
+  width: 100%;
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  padding: 35px;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-header h2 {
+  font-size: 26px;
+  color: #333;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.auth-header p {
+  font-size: 16px;
+  color: #666;
+  margin: 0;
+}
+
+.auth-error {
+  background-color: #ffe5e5;
+  color: #e53935;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+}
+
+.form-group label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  margin-bottom: 4px;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-with-icon i {
+  position: absolute;
+  left: 12px;
+  color: #888;
+  font-style: normal;
+  z-index: 1;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 12px 12px 12px 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+.input-with-icon input:focus {
+  outline: none;
+  border-color: #5a4af3;
+  box-shadow: 0 0 0 2px rgba(90, 74, 243, 0.2);
+}
+
+.password-hint {
+  font-size: 12px;
+  color: #888;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+.role-selector {
+  display: flex;
+  gap: 15px;
+  margin-top: 5px;
+  width: 100%;
+}
+
+.role-option {
+  flex: 1;
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-align: center;
+}
+
+.role-option:hover {
+  border-color: #c2bdf7;
+  background-color: #f7f7ff;
+}
+
+.role-option.selected {
+  border-color: #5a4af3;
+  background-color: #f0f0ff;
+}
+
+.role-option input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.role-option label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin: 0;
+}
+
+.role-icon {
+  font-size: 20px;
+  font-style: normal;
+}
+
+.role-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #444;
+}
+
+.auth-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.1s;
+  margin-top: 10px;
+}
+
+.auth-button:active {
+  transform: translateY(1px);
+}
+
+.primary-button {
+  background-color: #5a4af3;
+  color: white;
+}
+
+.primary-button:hover {
+  background-color: #4837e0;
+}
+
+.primary-button:disabled {
+  background-color: #b3acf7;
+  cursor: not-allowed;
+}
+
+.auth-footer {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 15px;
+  color: #666;
+}
+
+.auth-footer p {
+  margin: 0;
+}
+
+.auth-link {
+  color: #5a4af3;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+/* Responsive design for different screen sizes */
+@media (max-width: 576px) {
+  .auth-card {
+    padding: 25px 20px;
+  }
+  
+  .auth-form {
+    gap: 16px;
+  }
+  
+  .role-selector {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
