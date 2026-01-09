@@ -1,0 +1,6 @@
+flask
+flask-cors
+requests
+pillow
+numpy
+tensorflow-cpu==2.19.0

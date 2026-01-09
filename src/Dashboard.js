@@ -11,10 +11,12 @@ const Dashboard = () => {
   const [reports, setReports] = useState([]);
   const [showSubmissionSuccess, setShowSubmissionSuccess] = useState(false);
   const [filterType, setFilterType] = useState('All Types');
-const [filterStatus, setFilterStatus] = useState('All Statuses');
-const [authError, setAuthError] = useState(false);
-const [searchQuery, setSearchQuery] = useState('');
-const navigate = useNavigate();
+  const [filterStatus, setFilterStatus] = useState('All Statuses');
+  const [authError, setAuthError] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [userRole, setUserRole] = useState('');
+  const [predictionError, setPredictionError] = useState(null);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     type: 'Oil Spill',
     location: '',
@@ -67,6 +69,11 @@ const navigate = useNavigate();
   
   useEffect(() => {
     fetchReports();
+    // Get user role from localStorage
+    const role = localStorage.getItem('role');
+    if (role) {
+      setUserRole(role);
+    }
   }, []);
 
   
@@ -112,6 +119,13 @@ const navigate = useNavigate();
       if (!ipfsHash) throw new Error("No IPFS hash returned from upload");
   
       console.log("IPFS Hash:", ipfsHash);
+
+      // Fetch prediction from Flask
+      let prediction = null;
+      if (formData.images[0].file) {
+        prediction = await fetchPredictions(formData.images[0].file);
+        console.log("Prediction result:", prediction);
+      }
   
       // Submit report to backend
       console.log("Saving report to database...");
@@ -120,6 +134,7 @@ const navigate = useNavigate();
         category: formData.type,
         location: formData.location,
         ipfs_hash: ipfsHash,
+        prediction: prediction,
       }, {
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -159,7 +174,27 @@ const navigate = useNavigate();
     }
   };
   
-  
+  const fetchPredictions = async (imageFile) => {
+    try {
+      const formData = new FormData();
+      formData.append('image', imageFile);
+
+      const res = await axios.post('http://localhost:5000/api/predict', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      setPredictionError(null);
+      return res.data;
+    } catch (error) {
+      console.error('Prediction service error:', error);
+      setPredictionError('Prediction service unreachable: Failed to fetch');
+      return null;
+    }
+  };
+
   // Handle navigation
   const navigateTo = (route) => {
     setCurrentView(route);
@@ -267,6 +302,11 @@ const navigate = useNavigate();
       case 'reports':
         return (
           <section className="reports-view content-section">
+            {predictionError && (
+              <div className="error-message" style={{ backgroundColor: '#ffebee', color: '#c62828', padding: '12px', marginBottom: '16px', borderRadius: '4px' }}>
+                {predictionError}
+              </div>
+            )}
             {authError ? (
               <div className="auth-error">
                 <h3>Authentication Error</h3>
@@ -332,8 +372,8 @@ const navigate = useNavigate();
                           <td>{report.ipfsHash}</td>
                           <td>
                             <div className="action-buttons">
-                              <button className="action-btn view">View</button>
-                              <button className="action-btn">Details</button>
+                              <button className="action-btn view" onClick={() => window.open(`/reports/view/${report.id}`)}>View</button>
+                              <button className="action-btn" onClick={() => alert(`Report ID: ${report.id}\nType: ${report.type}\nLocation: ${report.location}\nStatus: ${report.status}`)}>Details</button>
                             </div>
                           </td>
                         </tr>
@@ -442,71 +482,50 @@ const navigate = useNavigate();
             )}
             
             {!showSubmissionSuccess && (
-              <div className="form-container">
+              <div className="form-container enhanced-form">
                 <form className="report-form" onSubmit={handleSubmit}>
+                  <div className="form-header">
+                    <h3>Report Incident Details</h3>
+                    <p className="form-subtitle">Provide accurate information to help us respond effectively</p>
+                  </div>
                   <div className="form-grid">
                     <div className="form-group">
-                      <label>Pollution Type</label>
-                      <select 
-                        className="form-input"
-                        name="type"
-                        value={formData.type}
-                        onChange={handleInputChange}
-                      >
-                        <option>Oil Spill</option>
-                        <option>Plastic Waste</option>
-                        <option>Chemical Runoff</option>
-                        <option>Sewage</option>
-                        <option>Other</option>
-                      </select>
-                    </div>
-                    <div className="form-group">
-                      <label>Date Observed</label>
+                      <label>Date Observed <span className="required">*</span></label>
                       <input 
                         className="form-input"
                         type="date"
                         name="date"
                         value={formData.date}
                         onChange={handleInputChange}
+                        required
                       />
                     </div>
+                    <div className="form-group">
+                      <label>Severity Level <span className="required">*</span></label>
+                      <select
+                        className="form-input severity-select"
+                        name="severity"
+                        value={formData.severity}
+                        onChange={handleInputChange}
+                      >
+                        <option value="">Select severity...</option>
+                        <option value="Low">🟢 Low</option>
+                        <option value="Medium">🟡 Medium</option>
+                        <option value="High">🔴 High</option>
+                        <option value="Critical">⚠️ Critical</option>
+                      </select>
+                    </div>
                     <div className="form-group full-width">
-                      <label>Location</label>
+                      <label>Location <span className="required">*</span></label>
                       <input 
                         className="form-input"
                         type="text"
-                        placeholder="Coordinates or description"
+                        placeholder="Enter coordinates or area description (e.g., 40.7128, -74.0060)"
                         name="location"
                         value={formData.location}
                         onChange={handleInputChange}
                         required
                       />
-                    </div>
-                    <div className="form-group full-width">
-                      <label>Description</label>
-                      <textarea 
-                        className="form-input"
-                        placeholder="Detailed description of the incident"
-                        rows="5"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleInputChange}
-                        required
-                      ></textarea>
-                    </div>
-                    <div className="form-group">
-                      <label>Severity (Estimated)</label>
-                      <select
-                        className="form-input"
-                        name="severity"
-                        value={formData.severity}
-                        onChange={handleInputChange}
-                      >
-                        <option>Low</option>
-                        <option>Medium</option>
-                        <option>High</option>
-                        <option>Critical</option>
-                      </select>
                     </div>
                     <div className="form-group">
                       <label>Area Affected (sq km)</label>
@@ -514,14 +533,28 @@ const navigate = useNavigate();
                         className="form-input"
                         type="number"
                         step="0.1"
+                        placeholder="Estimated area in square kilometers"
                         name="area"
                         value={formData.area}
                         onChange={handleInputChange}
                       />
                     </div>
                     <div className="form-group full-width">
-                      <label>Evidence Images</label>
-                      <div className="file-upload">
+                      <label>Description <span className="required">*</span></label>
+                      <textarea 
+                        className="form-input description-textarea"
+                        placeholder="Provide detailed information about the incident: what happened, what you observed, any visible impacts..."
+                        rows="6"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleInputChange}
+                        required
+                      ></textarea>
+                      <span className="char-count">{formData.description.length} characters</span>
+                    </div>
+                    <div className="form-group full-width">
+                      <label>Evidence Images <span className="optional">(Optional)</span></label>
+                      <div className="file-upload enhanced-upload">
                         <input 
                           type="file"
                           multiple
@@ -531,22 +564,29 @@ const navigate = useNavigate();
                         />
                         <label htmlFor="file-input">
                           <div className="upload-icon">📷</div>
-                          <p>Drag images here or click to browse</p>
+                          <p className="upload-text">Drag images here or click to browse</p>
+                          <p className="upload-hint">Supported formats: JPG, PNG, GIF (Max 5MB per file)</p>
                         </label>
                       </div>
                       
                       {formData.images.length > 0 && (
                         <div className="image-previews">
+                          <div className="images-header">
+                            <h4>Uploaded Images ({formData.images.length})</h4>
+                          </div>
                           {formData.images.map((image, index) => (
-                            <div className="image-preview" key={index}>
-                              <img src={image.preview} alt={`Preview ${index}`} />
+                            <div className="image-preview enhanced-preview" key={index}>
+                              <div className="image-thumbnail">
+                                <img src={image.preview} alt={`Preview ${index}`} />
+                              </div>
                               <div className="image-preview-info">
                                 <span className="image-name">{image.name}</span>
                                 <button 
                                   type="button" 
                                   className="remove-image"
                                   onClick={() => removeImage(index)}
-                                >×</button>
+                                  title="Remove image"
+                                >✕ Remove</button>
                               </div>
                             </div>
                           ))}
@@ -554,9 +594,14 @@ const navigate = useNavigate();
                       )}
                     </div>
                   </div>
-                  <div className="form-footer">
-                    <button type="submit" className="submit-btn">Submit Report</button>
-                    <button type="reset" className="reset-btn">Reset Form</button>
+                  
+                  <div className="form-actions-enhanced">
+                    <button type="submit" className="submit-btn primary-action">
+                      <span>✓</span> Submit Report
+                    </button>
+                    <button type="reset" className="reset-btn secondary-action">
+                      <span>↻</span> Reset Form
+                    </button>
                   </div>
                 </form>
                 <div className="form-sidebar">
@@ -653,44 +698,99 @@ const navigate = useNavigate();
 
             <section className="recent-reports content-section">
               <div className="section-header">
-                <h2>Recent Reports</h2>
+                <h2>Your Reports</h2>
                 <button className="view-all" onClick={() => navigateTo('reports')}>View All Reports &rarr;</button>
               </div>
-              <div className="table-container">
-                <table className="data-table">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Date</th>
-                      <th>Type</th>
-                      <th>Location</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {Array.isArray(reports) && reports.map((report) => (
-                      <tr key={report.id}>
-                        <td>{report.id}</td>
-                        <td>{report.date}</td>
-                        <td>{report.type}</td>
-                        <td>{report.location}</td>
-                        <td>
-                        <span className={`status-badge ${report.status || 'unknown'}`}>
-  {(report.status && report.status.charAt(0).toUpperCase() + report.status.slice(1)) || 'Unknown'}
-</span>
-                        </td>
-                        <td>
-                          <div className="action-buttons">
-                            <button className="action-btn view">View</button>
-                            <button className="action-btn">Details</button>
-                          </div>
-                        </td>
-                      </tr>
+
+              {/* OIL SPILL REPORTS */}
+              {Array.isArray(reports) && reports.filter(r => r.type === 'Oil Spill').length > 0 && (
+                <div className="report-category-section">
+                  <div className="category-header oil-header-user">
+                    <h3>⚫ Oil Spill Reports ({reports.filter(r => r.type === 'Oil Spill').length})</h3>
+                  </div>
+                  <div className="user-reports-grid">
+                    {reports.filter(r => r.type === 'Oil Spill').map((report) => (
+                      <div key={report.id} className="user-report-card">
+                        <div className="report-header-user">
+                          <h4>{report.id}</h4>
+                          <span className={`status-badge ${report.status || 'unknown'}`}>
+                            {(report.status && report.status.charAt(0).toUpperCase() + report.status.slice(1)) || 'Pending'}
+                          </span>
+                        </div>
+                        <div className="report-info-user">
+                          <p><strong>Date:</strong> {report.date}</p>
+                          <p><strong>Location:</strong> {report.location}</p>
+                          <p><strong>Type:</strong> Oil Spill</p>
+                        </div>
+                        <div className="report-actions-user">
+                          <button className="action-btn-user view" onClick={() => window.open(`/reports/view/${report.id}`)}>View Details</button>
+                          <button className="action-btn-user edit" onClick={() => navigateTo('submit')}>Edit Report</button>
+                        </div>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
-              </div>
+                  </div>
+                </div>
+              )}
+
+              {/* PLASTIC REPORTS */}
+              {Array.isArray(reports) && reports.filter(r => r.type === 'Plastic Waste').length > 0 && (
+                <div className="report-category-section">
+                  <div className="category-header plastic-header-user">
+                    <h3>🔴 Plastic Waste Reports ({reports.filter(r => r.type === 'Plastic Waste').length})</h3>
+                  </div>
+                  <div className="user-reports-grid">
+                    {reports.filter(r => r.type === 'Plastic Waste').map((report) => (
+                      <div key={report.id} className="user-report-card">
+                        <div className="report-header-user">
+                          <h4>{report.id}</h4>
+                          <span className={`status-badge ${report.status || 'unknown'}`}>
+                            {(report.status && report.status.charAt(0).toUpperCase() + report.status.slice(1)) || 'Pending'}
+                          </span>
+                        </div>
+                        <div className="report-info-user">
+                          <p><strong>Date:</strong> {report.date}</p>
+                          <p><strong>Location:</strong> {report.location}</p>
+                          <p><strong>Type:</strong> Plastic Waste</p>
+                        </div>
+                        <div className="report-actions-user">
+                          <button className="action-btn-user view" onClick={() => window.open(`/reports/view/${report.id}`)}>View Details</button>
+                          <button className="action-btn-user edit" onClick={() => navigateTo('submit')}>Edit Report</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* OTHER REPORTS */}
+              {Array.isArray(reports) && reports.filter(r => r.type !== 'Oil Spill' && r.type !== 'Plastic Waste').length > 0 && (
+                <div className="report-category-section">
+                  <div className="category-header other-header-user">
+                    <h3>⚪ Other Reports ({reports.filter(r => r.type !== 'Oil Spill' && r.type !== 'Plastic Waste').length})</h3>
+                  </div>
+                  <div className="user-reports-grid">
+                    {reports.filter(r => r.type !== 'Oil Spill' && r.type !== 'Plastic Waste').map((report) => (
+                      <div key={report.id} className="user-report-card">
+                        <div className="report-header-user">
+                          <h4>{report.id}</h4>
+                          <span className={`status-badge ${report.status || 'unknown'}`}>
+                            {(report.status && report.status.charAt(0).toUpperCase() + report.status.slice(1)) || 'Pending'}
+                          </span>
+                        </div>
+                        <div className="report-info-user">
+                          <p><strong>Date:</strong> {report.date}</p>
+                          <p><strong>Location:</strong> {report.location}</p>
+                          <p><strong>Type:</strong> {report.type}</p>
+                        </div>
+                        <div className="report-actions-user">
+                          <button className="action-btn-user view" onClick={() => window.open(`/reports/view/${report.id}`)}>View Details</button>
+                          <button className="action-btn-user edit" onClick={() => navigateTo('submit')}>Edit Report</button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="quick-actions">
                 <button className="action-card green" onClick={() => navigateTo('submit')}>
                   <div className="action-icon submit"></div>
@@ -728,6 +828,7 @@ const navigate = useNavigate();
       <div className="logo-icon"></div>
       <h1>Marine Pollution Dashboard</h1>
     </div>
+    {(userRole === 'authority' || userRole === 'scientific') && (
     <div className="mode-switcher">
       <button 
         className={`mode-btn ${currentMode === 'public' ? 'active' : ''}`} 
@@ -748,6 +849,7 @@ const navigate = useNavigate();
         Authority Mode
       </button>
     </div>
+    )}
     {/* <button 
       className="logout-btn" 
       onClick={() => {

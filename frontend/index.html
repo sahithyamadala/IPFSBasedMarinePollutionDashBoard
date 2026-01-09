@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marine DB - Ocean Contamination Detection</title>
+    <style>
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --success: #2b8a3e;
+            --error: #c92a2a;
+            --warning: #f08c00;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            color: #333;
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+        header h1 { font-size: 3em; margin-bottom: 10px; }
+        header p { font-size: 1.2em; opacity: 0.9; }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .feature {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .feature h3 { color: var(--primary); margin: 15px 0; }
+        .feature-icon { font-size: 3em; margin-bottom: 15px; }
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌊 Marine DB</h1>
+        <p>AI-Powered Ocean Contamination Detection System</p>
+    </header>
+
+    <div class="features">
+        <div class="feature">
+            <div class="feature-icon">🎯</div>
+            <h3>Instant Predictions</h3>
+            <p>Real-time image classification for marine contamination detection</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">📊</div>
+            <h3>Batch Processing</h3>
+            <p>Process multiple images efficiently in one request</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">📈</div>
+            <h3>Analytics</h3>
+            <p>Track prediction statistics and trends over time</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🔍</div>
+            <h3>Detailed Reports</h3>
+            <p>Comprehensive confidence scores and reasoning</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">🌐</div>
+            <h3>IPFS Support</h3>
+            <p>Seamless integration with decentralized storage</p>
+        </div>
+        <div class="feature">
+            <div class="feature-icon">⚡</div>
+            <h3>High Performance</h3>
+            <p>Optimized inference with caching and fallback modes</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>Marine DB Prediction Service v1.0 | Protecting Our Oceans 🌍</p>
+    </footer>
+</body>
+</html>

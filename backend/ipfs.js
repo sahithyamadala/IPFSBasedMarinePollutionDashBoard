@@ -8,14 +8,17 @@ const pinata = new pinataSDK(
 );
 
 // Function to upload a file to IPFS
-async function uploadToIPFS(content) {
+async function uploadToIPFS(content, type = 'unknown') {
   try {
     // Convert content to buffer if it's not already
     const contentBuffer = Buffer.from(JSON.stringify(content));
     
     const options = {
       pinataMetadata: {
-        name: `Marine_Report_${Date.now()}`
+        name: `Marine_Report_${Date.now()}`,
+        keyvalues: {
+          report_type: type // 'oil_spill', 'non_oil_spill', etc.
+        }
       }
     };
     

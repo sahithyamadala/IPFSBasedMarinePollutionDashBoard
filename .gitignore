@@ -10,7 +10,12 @@
 
 # production
 /build
+
+# environment variables (all .env files everywhere)
 .env
+.env.*
+**/.env
+**/.env.*
 
 # misc
 .DS_Store
@@ -22,3 +27,19 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# Python virtual environments
+**/tf_env/
+**/tf-env-backend/
+**/marine_env/
+**/marine_env_310/
+**/__pycache__/
+*.pyc
+
+# Backend
+backend/uploads/
+backend/cache_images/
+backend/logs/
+backend/instance/
+
+# Models (optional - uncomment if you don't want to push large model files)
+# backend/models/*.h5

@@ -66,24 +66,27 @@
   background-color: #ff4d4f;
   color: #fff;
   border: none;
-  width:10%;
-  height:40%;
-  padding: 0.4rem 0.8rem; /* Reduced padding for a smaller button */
-  font-size: 0.9rem; /* Slightly smaller font size */
-  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 6px;
   transition: all 0.3s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  white-space: nowrap; /* Prevents the text from wrapping */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
   text-align: center;
-  min-width: auto; /* Removes unnecessary width constraints */
-  height: auto; /* Adjusts height dynamically based on content */
+  display: inline-block;
 }
+
 .logout-button:hover {
-  background-color: #d9363e;
+  background-color: #ff7875;
   transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+}
+
+.logout-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Main content styling */
@@ -98,6 +101,45 @@
   color: #003366;
   border-bottom: 2px solid #e1e1e1;
   padding-bottom: 0.5rem;
+}
+
+/* Category sections for separated reports */
+.reports-category-section {
+  margin-bottom: 2.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  background: #f9f9f9;
+}
+
+.category-header {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 3px solid #e1e1e1;
+}
+
+.category-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.plastic-header {
+  background: linear-gradient(135deg, #ff7875 0%, #ff4d4f 100%);
+  border-bottom-color: #ff4d4f;
+}
+
+.oil-header {
+  background: linear-gradient(135deg, #434343 0%, #222222 100%);
+  border-bottom-color: #222222;
+}
+
+.none-header {
+  background: linear-gradient(135deg, #9e9e9e 0%, #757575 100%);
+  border-bottom-color: #757575;
 }
 
 .loading,
@@ -181,6 +223,70 @@
 
 .copy-button:active {
   transform: translateY(1px);
+}
+
+/* Prediction probabilities and confidence */
+.report-ml {
+  background-color: #f5f9ff;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 4px solid #007bff;
+  margin-bottom: 1rem;
+}
+
+.report-prediction {
+  margin-bottom: 0.75rem;
+  font-size: 1rem;
+  color: #003366;
+  font-weight: 600;
+}
+
+.prediction-probs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.prob-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #e1e1e1;
+  font-size: 0.95rem;
+}
+
+.prob-item strong {
+  color: #007bff;
+  font-weight: 700;
+}
+
+.confidence {
+  padding: 0.75rem;
+  border-radius: 4px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.confidence.high {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.confidence.medium {
+  background-color: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeeba;
+}
+
+.confidence.low {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
 }
 
 /* Actions */
@@ -315,11 +421,13 @@
   margin-top: 0;
   color: #003366;
   font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .logout-modal p {
   margin-bottom: 1.5rem;
   color: #555;
+  font-size: 1rem;
 }
 
 .logout-modal-buttons {
@@ -332,26 +440,47 @@
   background-color: #ff4d4f;
   color: white;
   border: none;
-  padding: 0.7rem 1.2rem;
-  border-radius: 4px;
-  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 120px;
 }
 
 .confirm-logout-button:hover {
-  background-color: #d9363e;
+  background-color: #ff7875;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 77, 79, 0.3);
+}
+
+.confirm-logout-button:active {
+  transform: translateY(0);
 }
 
 .cancel-logout-button {
-  background-color: #e0e0e0;
+  background-color: #f0f0f0;
   color: #333;
-  border: none;
-  padding: 0.7rem 1.2rem;
-  border-radius: 4px;
-  font-weight: 500;
+  border: 1px solid #d9d9d9;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.cancel-logout-button:hover {
+  background-color: #e6e6e6;
+  border-color: #b3b3b3;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.cancel-logout-button:active {
+  transform: translateY(0);
 }
 
 .cancel-logout-button:hover {

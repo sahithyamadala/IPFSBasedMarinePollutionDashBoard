@@ -9,8 +9,6 @@ const FormData = require('form-data');
 const fs = require('fs');
 
 require('dotenv').config();
-console.log('✅ Loaded PINATA_API_KEY:', process.env.PINATA_API_KEY);
-console.log('✅ Loaded PINATA_SECRET_API_KEY:', process.env.PINATA_SECRET_API_KEY);
 
 const app = express();
 app.use(cors({
